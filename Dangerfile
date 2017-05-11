@@ -4,6 +4,10 @@ if git.commits.any? { |c| c.message =~ /^Merge branch/ }
   fail('Please rebase to get rid of the merge commits in this PR')
 end
 
+if git.commits.any? { |c| c.message =~ /^(fixup|squash)!/ }
+  fail('Please rebase to get rid of the fixup and squash commits in this PR')
+end
+
 if status_report.values.flatten.any?
   markdown <<~DANGER_EXPLANATION
   At the Ministry of Justice, we use \
