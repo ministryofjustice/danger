@@ -25,7 +25,7 @@ Add `danger` to your `Gemfile`.
 gem 'danger'
 ```
 
-#### Run Danger in CI
+#### Run Danger in Travis
 
 Add Danger to `.travis.yml`:
 
@@ -43,6 +43,20 @@ matrix:
       script:
         - bundle exec danger
 ```
+
+And add the `DANGER_GITHUB_API_TOKEN` as an environment variable in
+Travis's repo settings, which are at a URL like
+`https://travis-ci.org/ministryofjustice/[repo]/settings`. The API token
+itself is in Rattic (search for `Danger`).
+
+#### Run Danger in CircleCI
+
+Just add `bundle exec danger` to your `circle.yml`, either as an extra
+step in your `test` overrides, or in a new `pre` section. You'll need
+to add the `DANGER_GITHUB_API_TOKEN` to the environment variables like
+with Travis, and [Danger
+recommend](http://danger.systems/guides/getting_started.html#setting-up-danger-to-run-on-your-ci)
+setting “only build pull requests” in the advanced settings.
 
 ### If you're not running Ruby
 
