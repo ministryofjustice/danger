@@ -26,36 +26,6 @@ echo "danger.import_dangerfile(github: 'ministryofjustice/danger')" > Dangerfile
 
 Commit and push your changes.
 
-## Add Danger to your [ministryofjustice organization](https://github.com/ministryofjustice) Non-ruby project
-
-1. Install ruby (any version >= 2.3.0)
-
-2. Install Bundler
-
-```
-gem install bundler
-```
-
-3. Create the following Gemfile;
-
-```
-source 'https://rubygems.org'
-
-group :development do
-  gem 'moj-danger'
-end
-```
-
-4. Run `bundle install`
-
-5. Create a Dangerfile that imports the central MoJ Dangerfile
-
-```bash
-echo "danger.import_dangerfile(github: 'ministryofjustice/danger')" > Dangerfile
-```
-
-Commit and push your changes.
-
 #### Run Danger in Travis
 
 1. Add Danger to your `.travis.yml` (use whatever ruby version (>= 2.3.0) is appropriate)
@@ -87,7 +57,7 @@ This assumes your project has already been added to Travis.
 
 Add the environment variable `DANGER_GITHUB_API_TOKEN`, with the value
 from the password field of the `MOJ Danger bot Github API token` entry
-in [Rattic](https://rattic.service.dsd.io/cred/detail/695/)
+in Rattic.
 
 Danger will now run against every PR which is raised, and will create comments
 about any errors that it finds (the comments will be removed once the issues
@@ -100,7 +70,7 @@ a Gemfile cluttering up your repo. In that case, you can (probably) use
 this command in the Travis config above:
 
 ```bash
-rbenv global 2.3.1 && gem install danger --version '~> 5.0' && danger
+rbenv global 2.3.1 && gem install ministryofjustice-danger --version '~> 0.1' && danger
 ```
 
 #### Run Danger in CircleCI
