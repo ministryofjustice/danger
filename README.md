@@ -6,10 +6,7 @@ of quality.
 
 [![Gem Version](https://badge.fury.io/rb/ministryofjustice-danger.svg)](https://badge.fury.io/rb/ministryofjustice-danger)
 
-## Add Danger to your project
-
-Enable Danger for a project within the [ministryofjustice
-organization](https://github.com/ministryofjustice).
+## Add Danger to your [ministryofjustice organization](https://github.com/ministryofjustice) Ruby project
 
 1. Add the following to your Gemfile;
 
@@ -19,9 +16,39 @@ group :development do
 end
 ```
 
-1. `bundle install`
+2. `bundle install`
 
-1. Create Dangerfile
+3. Create a Dangerfile that imports the central MoJ Dangerfile
+
+```bash
+echo "danger.import_dangerfile(github: 'ministryofjustice/danger')" > Dangerfile
+```
+
+Commit and push your changes.
+
+## Add Danger to your [ministryofjustice organization](https://github.com/ministryofjustice) Non-ruby project
+
+1. Install ruby (any version >= 2.3.0)
+
+2. Install Bundler
+
+```
+gem install bundler
+```
+
+3. Create the following Gemfile;
+
+```
+source 'https://rubygems.org'
+
+group :development do
+  gem 'moj-danger'
+end
+```
+
+4. Run `bundle install`
+
+5. Create a Dangerfile that imports the central MoJ Dangerfile
 
 ```bash
 echo "danger.import_dangerfile(github: 'ministryofjustice/danger')" > Dangerfile
@@ -31,7 +58,7 @@ Commit and push your changes.
 
 #### Run Danger in Travis
 
-1. Add Danger to your .travis.yml (use whatever ruby version (>= 2.3.0) is appropriate)
+1. Add Danger to your `.travis.yml` (use whatever ruby version (>= 2.3.0) is appropriate)
 
 ```yaml
 rvm: 2.3.3
@@ -52,7 +79,7 @@ matrix:
 
 Commit and push the changes.
 
-1. Add the MoJ Dangerbot API token to Travis;
+2. Add the MoJ Dangerbot API token to Travis;
 
 This assumes your project has already been added to Travis.
 
@@ -66,16 +93,7 @@ Danger will now run against every PR which is raised, and will create comments
 about any errors that it finds (the comments will be removed once the issues
 are fixed).
 
-#### Run Danger in CircleCI
-
-Just add `bundle exec danger` to your `circle.yml`, either as an extra
-step in your `test` overrides, or in a new `pre` section. You'll need
-to add the `DANGER_GITHUB_API_TOKEN` to the environment variables like
-with Travis, and
-[Danger recommend](http://danger.systems/guides/getting_started.html#setting-up-danger-to-run-on-your-ci)
-setting “only build pull requests” in the advanced settings.
-
-### If you're not running Ruby
+##### If you're not running Ruby
 
 If Danger is your only Ruby dependency, you probably don't want to have
 a Gemfile cluttering up your repo. In that case, you can (probably) use
@@ -84,6 +102,15 @@ this command in the Travis config above:
 ```bash
 rbenv global 2.3.1 && gem install danger --version '~> 5.0' && danger
 ```
+
+#### Run Danger in CircleCI
+
+Just add `bundle exec danger` to your `circle.yml`, either as an extra
+step in your `test` overrides, or in a new `pre` section. You'll need
+to add the `DANGER_GITHUB_API_TOKEN` to the environment variables like
+with Travis, and
+[Danger recommend](http://danger.systems/guides/getting_started.html#setting-up-danger-to-run-on-your-ci)
+setting “only build pull requests” in the advanced settings.
 
 ## Fixing your commits
 
