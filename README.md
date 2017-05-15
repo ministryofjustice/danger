@@ -4,33 +4,36 @@
 ensure our commits, pull requests, and more meet a minimum level
 of quality.
 
-## Setup
+[![Gem Version](https://badge.fury.io/rb/ministryofjustice-danger.svg)](https://badge.fury.io/rb/ministryofjustice-danger)
 
-Enable Danger for a project within the [ministryofjustice
-organization](https://github.com/ministryofjustice).
+## Add Danger to your [ministryofjustice organization](https://github.com/ministryofjustice) Ruby project
 
-### Configure Danger to use this repo's Dangerfile
+1. Add the following to your Gemfile;
 
-Commit a `Dangerfile` containing linking to this repo:
-
-```ruby
-danger.import_dangerfile(github: 'ministryofjustice/danger')
+```
+group :development do
+  gem 'ministryofjustice-danger'
+end
 ```
 
-### If you're running Ruby
+2. `bundle install`
 
-Add `danger` to your `Gemfile`.
+3. Create a Dangerfile that imports the central MoJ Dangerfile
 
-```ruby
-gem 'danger'
+```bash
+echo "danger.import_dangerfile(github: 'ministryofjustice/danger')" > Dangerfile
 ```
+
+Commit and push your changes.
 
 #### Run Danger in Travis
 
-Add Danger to `.travis.yml`:
+1. Add Danger to your `.travis.yml` (use whatever ruby version (>= 2.3.0) is appropriate)
 
 ```yaml
-before_script:
+rvm: 2.3.3
+
+script:
   - bundle exec danger
 ```
 
@@ -39,31 +42,52 @@ before_script:
 ```yaml
 matrix:
   include:
-    - rvm: 2.3.1
+    - rvm: 2.3.3
       script:
         - bundle exec danger
 ```
 
-And add the `DANGER_GITHUB_API_TOKEN` as an environment variable in
-Travis's repo settings, which are at a URL like
-`https://travis-ci.org/ministryofjustice/[repo]/settings`. The API token
-itself is in Rattic (search for `Danger`).
+Commit and push the changes.
 
-#### Run Danger in CircleCI
+2. Add the MoJ Dangerbot API token to Travis;
 
-Just add `bundle exec danger` to your `circle.yml`, either as an extra
-step in your `test` overrides, or in a new `pre` section. You'll need
-to add the `DANGER_GITHUB_API_TOKEN` to the environment variables like
-with Travis, and [Danger
-recommend](http://danger.systems/guides/getting_started.html#setting-up-danger-to-run-on-your-ci)
-setting “only build pull requests” in the advanced settings.
+This assumes your project has already been added to Travis.
 
-### If you're not running Ruby
+    https://travis-ci.org/ministryofjustice/[your project]/settings
+
+Add the environment variable `DANGER_GITHUB_API_TOKEN`, with the value
+from the password field of the `MOJ Danger bot Github API token` entry
+in Rattic.
+
+Danger will now run against every PR which is raised, and will create comments
+about any errors that it finds (the comments will be removed once the issues
+are fixed).
+
+##### If you're not running Ruby
 
 If Danger is your only Ruby dependency, you probably don't want to have
 a Gemfile cluttering up your repo. In that case, you can (probably) use
 this command in the Travis config above:
 
 ```bash
-rbenv global 2.3.1 && gem install danger --version '~> 5.0' && danger
+rbenv global 2.3.1 && gem install ministryofjustice-danger --version '~> 0.1' && danger
 ```
+
+#### Run Danger in CircleCI
+
+Just add `bundle exec danger` to your `circle.yml`, either as an extra
+step in your `test` overrides, or in a new `pre` section. You'll need
+to add the `DANGER_GITHUB_API_TOKEN` to the environment variables like
+with Travis, and
+[Danger recommend](http://danger.systems/guides/getting_started.html#setting-up-danger-to-run-on-your-ci)
+setting “only build pull requests” in the advanced settings.
+
+## Fixing your commits
+
+To keep Danger happy, you will need to amend commits that you have already pushed.
+
+This [Github article](https://help.github.com/articles/changing-a-commit-message/)
+describes a process for doing this. But, please use `--force-with-lease` instead
+of `--force` when pushing your amendments. See [this article](https://developer.atlassian.com/blog/2015/04/force-with-lease/)
+for more information.
+
