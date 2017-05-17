@@ -4,10 +4,6 @@ if github.pr_title.upcase.include? "WIP"
   warn('This PR is still a work in progress (it has `WIP` in the title).')
 end
 
-if git.commits.any? { |c| c.message =~ /^Merge branch/ }
-  fail('Please rebase to get rid of the merge commits in this PR')
-end
-
 if git.commits.any? { |c| c.message =~ /^(fixup|squash)!/ }
   fail('Please rebase to get rid of the fixup and squash commits in this PR')
 end
