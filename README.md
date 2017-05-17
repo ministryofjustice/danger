@@ -19,10 +19,10 @@ danger.import_dangerfile(github: 'ministryofjustice/danger')
 
 ### If you're running Ruby
 
-Add `danger` to your `Gemfile`.
+Add `ministryofjustice-danger` to your `Gemfile`.
 
 ```ruby
-gem 'danger'
+gem 'ministryofjustice-danger'
 ```
 
 #### Run Danger in Travis
@@ -65,5 +65,23 @@ a Gemfile cluttering up your repo. In that case, you can (probably) use
 this command in the Travis config above:
 
 ```bash
-rbenv global 2.3.1 && gem install danger --version '~> 5.0' && danger
+rbenv global 2.3.1 && gem install ministryofjustice-danger --version '~> 0.1' && danger
+```
+
+## Updating the gem
+
+e.g. to add new runtime dependencies
+
+1. Make your changes to `ministryofjustice-danger.gemspec`
+
+2. Update the version in  `ministryofjustice-danger.gemspec`
+
+3. Build the gem
+```
+gem build ministryofjustice-danger.gemspec
+```
+
+4. Publish to [Rubygems](https://rubygems.org)
+```
+gem push ministryofjustice-danger-[VERSION].gem
 ```
