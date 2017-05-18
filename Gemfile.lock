@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    ministryofjustice-danger (0.1.1)
-      danger
-      danger-commit_lint
+    ministryofjustice-danger (0.1.2)
+      danger (~> 5)
+      danger-commit_lint (~> 0)
 
 GEM
   remote: https://rubygems.org/
